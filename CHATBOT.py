@@ -27,7 +27,7 @@ chiave = st.secrets["superkey"]
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-#from langchain.vectorstores import FAISS
+from langchain.vectorstores import FAISS
 from langchain_openai import OpenAI
 # Nuovi import:
 #from langchain.question_answering import load_qa_chain
