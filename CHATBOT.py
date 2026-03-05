@@ -116,5 +116,5 @@ chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
         # Chain: prendi la domanda, individua i frammenti rilevanti,
         # passali all'LLM, genera la risposta
 risposta = chain.invoke({"context": rilevanti, "question": domanda})
-  st.write(risposta)
+st.write(risposta)
 
