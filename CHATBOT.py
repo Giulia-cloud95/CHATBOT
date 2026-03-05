@@ -86,18 +86,18 @@ st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
     # Ogni volta che l’utente modifica il campo e preme Invio,
     # la funzione invia() viene chiamata.
 
-    domanda = st.session_state.get("domanda_inviata", "")
+domanda = st.session_state.get("domanda_inviata", "")
     # Recupera il valore salvato in "domanda_inviata".
     # Se "domanda_inviata" non è ancora stato definito (es. al primo avvio dell'app),
     # allora il valore predefinito sarà "" (secondo argomento dell'istruzione)
 
 # --------------------------------------------------
 
-    if domanda:
+if domanda:
       # st.write("Sto cercando le informazioni che mi hai richiesto...")
       rilevanti = vector_store.similarity_search(domanda)
 
-      # Definiamo l'LLM
+#Definiamo l'LLM
       llm = ChatOpenAI(
           openai_api_key= chiave,
           temperature = 1.0,
