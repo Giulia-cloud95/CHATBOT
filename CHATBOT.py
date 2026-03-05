@@ -25,7 +25,7 @@ st.markdown(
 
 chiave = st.secrets["superkey"]
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain_community.chat_models import ChatOpenAI
