@@ -46,7 +46,7 @@ with st.sidebar:
 file = "Risorse.pdf"
   #from PyPDF2 import PdfReader
 if file is not None:
-  testo_letto = PdfReader(file)
+  #testo_letto = PdfReader(file)
   testo = ""
   #for pagina in testo_letto.pages:
     #testo = testo + pagina.extract_text()
