@@ -61,7 +61,7 @@ if file is not None:
     #length_function=len
    #)
   #pezzi = testo_spezzato.split_text(testo)
-  st.write(pezzi)
+  #st.write(pezzi)
 
     # Generazione embeddings
   embeddings = OpenAIEmbeddings(openai_api_key=chiave)
