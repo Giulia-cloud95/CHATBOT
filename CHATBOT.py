@@ -93,7 +93,7 @@ if file is not None:
     
 if domanda:
     st.write("Sto cercando le informazioni che mi hai richiesto...")
-    rilevanti = vector_store.similarity_search(domanda)
+    #rilevanti = vector_store.similarity_search(domanda)
     
     llm = ChatOpenAI(
   openai_api_key= chiave,
