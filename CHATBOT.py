@@ -73,34 +73,34 @@ if file is not None:
 # Gestione prompt
 # --------------------------------------------------
 
-  def invia():
-    st.session_state.domanda_inviata = st.session_state.domanda
-        # salva il contenuto di input in domanda_inviata
-    st.session_state.domanda = ""
-        # reset dopo invio
-  
-  st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
-      # key="domanda": assegna a st.session_state ciò che scriviamo (domanda)
-      # Ogni volta che l’utente modifica il campo e preme Invio,
-      # la funzione invia() viene chiamata.
-  
-  domanda = st.session_state.get("domanda_inviata", "")
-      # Recupera il valore salvato in "domanda_inviata".
-      # Se "domanda_inviata" non è ancora stato definito (es. al primo avvio dell'app),
-      # allora il valore predefinito sarà "" (secondo argomento dell'istruzione)
-  
-  # --------------------------------------------------
-  
+    def invia():
+      st.session_state.domanda_inviata = st.session_state.domanda
+          # salva il contenuto di input in domanda_inviata
+      st.session_state.domanda = ""
+          # reset dopo invio
+    
+    st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
+        # key="domanda": assegna a st.session_state ciò che scriviamo (domanda)
+        # Ogni volta che l’utente modifica il campo e preme Invio,
+        # la funzione invia() viene chiamata.
+    
+    domanda = st.session_state.get("domanda_inviata", "")
+        # Recupera il valore salvato in "domanda_inviata".
+        # Se "domanda_inviata" non è ancora stato definito (es. al primo avvio dell'app),
+        # allora il valore predefinito sarà "" (secondo argomento dell'istruzione)
+    
+    # --------------------------------------------------
+    
   if domanda:
-        # st.write("Sto cercando le informazioni che mi hai richiesto...")
-  rilevanti = vector_store.similarity_search(domanda)
-  
-  #Definiamo l'LLM
-    llm = ChatOpenAI(
-            openai_api_key= chiave,
-            temperature = 1.0,
-            max_tokens = 1000,
-            model_name = "gpt-3.5-turbo-0125")
+          # st.write("Sto cercando le informazioni che mi hai richiesto...")
+      rilevanti = vector_store.similarity_search(domanda)
+    
+    #Definiamo l'LLM
+llm = ChatOpenAI(
+              openai_api_key= chiave,
+              temperature = 1.0,
+              max_tokens = 1000,
+              model_name = "gpt-3.5-turbo-0125")
       # https://platform.openai.com/docs/models/compare
 
       # Prompt: deve avere {context} (per i documenti) e {question}
