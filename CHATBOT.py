@@ -51,7 +51,7 @@ if file is not None:
   for pagina in testo_letto.pages:
     #testo = testo + pagina.extract_text()
     
-  st.write(testo)
+  #st.write(testo)
 
     # Usiamo il text splitter di Langchain
   testo_spezzato = RecursiveCharacterTextSplitter(
