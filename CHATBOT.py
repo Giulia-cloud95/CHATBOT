@@ -47,12 +47,11 @@ with st.sidebar:
   from PyPDF2 import PdfReader
 
 if file is not None:
-    testo_letto = PdfReader(file)
-
-   testo = ""
+  testo_letto = PdfReader(file)
+  testo = ""
   for pagina in testo_letto.pages:
-   testo = testo + pagina.extract_text()
-        # st.write(testo)
+  testo = testo + pagina.extract_text()
+    # st.write(testo)
 
     # Usiamo il text splitter di Langchain
 testo_spezzato = RecursiveCharacterTextSplitter(
@@ -62,7 +61,7 @@ testo_spezzato = RecursiveCharacterTextSplitter(
   length_function=len)
 
 pezzi = testo_spezzato.split_text(testo)
-    # st.write(pezzi)
+# st.write(pezzi)
 
     # Generazione embeddings
  embeddings = OpenAIEmbeddings(openai_api_key=chiave)
