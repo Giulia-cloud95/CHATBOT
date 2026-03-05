@@ -3,5 +3,5 @@ Pypdf2
 faiss-cpu
 langchain
 langchain.openai
-langchain.community
+langchain-community
 langchain==0.0.350
