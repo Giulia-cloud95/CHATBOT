@@ -91,7 +91,7 @@ if file is not None:
     
     # --------------------------------------------------
     
-  if domanda:
+if domanda:
           # st.write("Sto cercando le informazioni che mi hai richiesto...")
       #rilevanti = vector_store.similarity_search(domanda)
     
