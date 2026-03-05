@@ -60,14 +60,14 @@ testo_spezzato = RecursiveCharacterTextSplitter(
     chunk_overlap=150,
     length_function=len
    )
-pezzi = testo_spezzato.split_text(testo)
+  pezzi = testo_spezzato.split_text(testo)
 st.write(pezzi)
 
     # Generazione embeddings
-embeddings = OpenAIEmbeddings(openai_api_key=chiave)
+  embeddings = OpenAIEmbeddings(openai_api_key=chiave)
 
     # Vector store - FAISS (by Facebook)
-vector_store = FAISS.from_texts(pezzi, embeddings)
+  vector_store = FAISS.from_texts(pezzi, embeddings)
 
 # --------------------------------------------------
 # Gestione prompt
