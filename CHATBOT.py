@@ -79,7 +79,7 @@ if file is not None:
       st.session_state.domanda = ""
           # reset dopo invio
     
-    st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
+  st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
         # key="domanda": assegna a st.session_state ciò che scriviamo (domanda)
         # Ogni volta che l’utente modifica il campo e preme Invio,
         # la funzione invia() viene chiamata.
