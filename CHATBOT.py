@@ -60,7 +60,7 @@ if file is not None:
     #chunk_overlap=150,
     #length_function=len
    #)
-  pezzi = testo_spezzato.split_text(testo)
+  #pezzi = testo_spezzato.split_text(testo)
   st.write(pezzi)
 
     # Generazione embeddings
