@@ -105,9 +105,9 @@ if domanda:
 
 #Prompt: deve avere {context} (per i documenti) e {question}
 prompt = ChatPromptTemplate.from_messages([
-                    ("system", "Sei un assistente che risponde solo in base 
+                  ("system", "Sei un assistente che risponde solo in base 
                     al contesto fornito."),
-                    ("human", "Domanda:
+                  ("human", "Domanda:
                     {question}\n\nContesto:\n{context}")
                     ])  
   
