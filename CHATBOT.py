@@ -67,7 +67,7 @@ if file is not None:
   embeddings = OpenAIEmbeddings(openai_api_key=chiave)
 
     # Vector store - FAISS (by Facebook)
-  vector_store = FAISS.from_texts(pezzi, embeddings)
+  #vector_store = FAISS.from_texts(pezzi, embeddings)
 
 # --------------------------------------------------
 # Gestione prompt
