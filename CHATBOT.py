@@ -40,10 +40,10 @@ logo = Image.open("leone Generali Italia.jpg")
 st.image(logo, width=800)
 # st.image(logo, use_column_width=True)
 
-# with st.sidebar:
-#  st.title("Carica i tuoi documenti")
-#  file = st.file_uploader("Carica il tuo file", type="pdf")
-file = "Risorse.pdf"
+with st.sidebar:
+st.title("Carica i tuoi documenti")
+file = st.file_uploader("Carica il tuo file", type="pdf")
+#file = "Risorse.pdf"
 from PyPDF2 import PdfReader
 
 if file is not None:
