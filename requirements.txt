@@ -2,6 +2,7 @@ streamlit
 Pypdf2 
 faiss-cpu
 langchain
-langchain_openai
-langchain_community
+langchain.openai
+langchain.community
 langchain==0.0.350
+langchain.question
