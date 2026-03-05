@@ -109,11 +109,11 @@ prompt = ChatPromptTemplate.from_messages([
       ("human", "Domanda: {question}\n\nContesto:\n{context}")])  
 
       # Nuova doc chain che sostituisce load_qa_chain
-  chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
+chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
         
       # Output
       # Chain: prendi la domanda, individua i frammenti rilevanti,
       # passali all'LLM, genera la risposta
-  risposta = chain.invoke({"context": rilevanti, "question": domanda})
-st.write(risposta)
+risposta = chain.invoke({"context": rilevanti, "question": domanda})
+  st.write(risposta)
 
