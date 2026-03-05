@@ -54,7 +54,7 @@ if file is not None:
   st.write(testo)
 
     # Usiamo il text splitter di Langchain
- testo_spezzato = RecursiveCharacterTextSplitter(
+testo_spezzato = RecursiveCharacterTextSplitter(
     separators="\n",
     chunk_size=1000, # Numero di caratteri per chunk
     chunk_overlap=150,
