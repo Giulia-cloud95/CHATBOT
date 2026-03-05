@@ -47,14 +47,14 @@ with st.sidebar:
   from PyPDF2 import PdfReader
 
 if file is not None:
-  testo_letto = PdfReader(file)
+    testo_letto = PdfReader(file)
   testo = ""
   for pagina in testo_letto.pages:
     testo = testo + pagina.extract_text()
     st.write(testo)
 
     # Usiamo il text splitter di Langchain
-  testo_spezzato = RecursiveCharacterTextSplitter(
+    testo_spezzato = RecursiveCharacterTextSplitter(
   separators="\n",
   chunk_size=1000, # Numero di caratteri per chunk
   chunk_overlap=150,
