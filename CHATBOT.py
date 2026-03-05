@@ -44,7 +44,7 @@ with st.sidebar:
   st.title("Carica i tuoi documenti")
   file = st.file_uploader("Carica il tuo file", type="pdf")
 file = "Risorse.pdf"
-  from PyPDF2 import PdfReader
+  #from PyPDF2 import PdfReader
 if file is not None:
   testo_letto = PdfReader(file)
   testo = ""
