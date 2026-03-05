@@ -79,7 +79,7 @@ if file is not None:
       st.session_state.domanda = ""
           # reset dopo invio
     
-  st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
+  st.text_input("", key="domanda", on_change=invia)
         # key="domanda": assegna a st.session_state ciò che scriviamo (domanda)
         # Ogni volta che l’utente modifica il campo e preme Invio,
         # la funzione invia() viene chiamata.
@@ -92,16 +92,16 @@ if file is not None:
     # --------------------------------------------------
     
 if domanda:
-          # st.write("Sto cercando le informazioni che mi hai richiesto...")
-rilevanti = vector_store.similarity_search(domanda)
+    st.write("Sto cercando le informazioni che mi hai richiesto...")
+    rilevanti = vector_store.similarity_search(domanda)
     
-#Definiamo l'LLM
 llm = ChatOpenAI(
   openai_api_key= chiave,
   temperature = 1.0,
   max_tokens = 1000,
-  #model_name = "gpt-3.5-0125")
+  model_name = "gpt-3.5-0125")
       # https://platform.openai.com/docs/models/compare
+  chain = load_qa_chain (llm, chain_type="stuff")
 
 Prompt: deve avere {context} (per i documenti) e {question}
 prompt = ChatPromptTemplate.from_messages([
@@ -117,6 +117,6 @@ chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
 #Output
           # Chain: prendi la domanda, individua i frammenti rilevanti,
   #passali all'LLM, genera la risposta
-risposta = chain.invoke({"input_documents": rilevanti, "question": domanda})
-st.write(risposta["output_text"])
+risposta = chain.run(input_documents = rilevanti, question = domanda)
+st.write(risposta)
 
