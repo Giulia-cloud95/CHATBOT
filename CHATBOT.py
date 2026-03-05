@@ -95,8 +95,8 @@ if domanda:
     st.write("Sto cercando le informazioni che mi hai richiesto...")
     #rilevanti = vector_store.similarity_search(domanda)
     
-    #llm = ChatOpenAI(
-  #openai_api_key= chiave,
+  llm = ChatOpenAI(
+  openai_api_key= chiave,
   temperature = 1.0,
   max_tokens = 1000,
   model_name = "gpt-3.5-0125")
@@ -109,7 +109,8 @@ if domanda:
   
     # Nuova doc chain che sostituisce load_qa_chain
     chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
-#Output
-    #risposta = chain.run({"input_documents": rilevanti, "question" = domanda})
-    #st.write(risposta["output_text"])
+# Output
+risposta = chain.invoke ({"context": rilevanti, "question" 
+domanda})
+      st.write(risposta["output_text"])
 
