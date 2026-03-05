@@ -76,9 +76,9 @@ with st.sidebar:
 # --------------------------------------------------
 
 def invia():
-st.session_state.domanda_inviata = st.session_state.domanda
+  st.session_state.domanda_inviata = st.session_state.domanda
       # salva il contenuto di input in domanda_inviata
-st.session_state.domanda = ""
+  st.session_state.domanda = ""
       # reset dopo invio
 
 st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
