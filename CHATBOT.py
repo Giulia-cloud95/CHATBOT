@@ -101,8 +101,7 @@ llm = ChatOpenAI(
   max_tokens = 1000,
   model_name = "gpt-3.5-0125")
       # https://platform.openai.com/docs/models/compare
-  chain = load_qa_chain(llm, chain_type="stuff")
-
+  
 Prompt: deve avere {context} (per i documenti) e {question}
 prompt = ChatPromptTemplate.from_messages([
                   ("system", "Sei un assistente che risponde solo in base 
@@ -114,9 +113,7 @@ prompt = ChatPromptTemplate.from_messages([
     # Nuova doc chain che sostituisce load_qa_chain
 chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
             
-#Output
-          # Chain: prendi la domanda, individua i frammenti rilevanti,
-  #passali all'LLM, genera la risposta
+Genera e mostra la risposta 
 risposta = chain.run(input_documents = rilevanti, question = domanda)
 st.write(risposta)
 
