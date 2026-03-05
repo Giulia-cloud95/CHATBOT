@@ -73,7 +73,7 @@ if file is not None:
 # Gestione prompt
 # --------------------------------------------------
 
-    def invia():
+  def invia():
       st.session_state.domanda_inviata = st.session_state.domanda
           # salva il contenuto di input in domanda_inviata
       st.session_state.domanda = ""
