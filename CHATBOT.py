@@ -84,7 +84,7 @@ if file is not None:
         # Ogni volta che l’utente modifica il campo e preme Invio,
         # la funzione invia() viene chiamata.
     
-    domanda = st.session_state.get("domanda_inviata", "")
+  domanda = st.session_state.get("domanda_inviata", "")
         # Recupera il valore salvato in "domanda_inviata".
         # Se "domanda_inviata" non è ancora stato definito (es. al primo avvio dell'app),
         # allora il valore predefinito sarà "" (secondo argomento dell'istruzione)
