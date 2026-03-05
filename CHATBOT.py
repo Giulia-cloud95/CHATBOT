@@ -114,6 +114,6 @@ if domanda:
 #Output
           # Chain: prendi la domanda, individua i frammenti rilevanti,
   #passali all'LLM, genera la risposta
-#risposta = chain.invoke({"input_documentes": rilevanti, "question": domanda})
+risposta = chain.invoke({"input_documentes": rilevanti, "question": domanda})
 #st.write(risposta)
 
