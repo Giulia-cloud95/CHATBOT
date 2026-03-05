@@ -110,6 +110,6 @@ if domanda:
     # Nuova doc chain che sostituisce load_qa_chain
     chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
 #Output
-    risposta = chain.run({"input_documents": rilevanti, "question" = domanda})
-    st.write(risposta["output_text"])
+    #risposta = chain.run({"input_documents": rilevanti, "question" = domanda})
+    #st.write(risposta["output_text"])
 
