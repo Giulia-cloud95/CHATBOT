@@ -51,7 +51,7 @@ if file is not None:
   testo = ""
   for pagina in testo_letto.pages:
     testo = testo + pagina.extract_text()
-    # st.write(testo)
+       st.write(testo)
 
     # Usiamo il text splitter di Langchain
 testo_spezzato = RecursiveCharacterTextSplitter(
@@ -61,10 +61,10 @@ testo_spezzato = RecursiveCharacterTextSplitter(
   length_function=len)
 
 pezzi = testo_spezzato.split_text(testo)
-#st.write(pezzi)
+st.write(pezzi)
 
     # Generazione embeddings
- embeddings = OpenAIEmbeddings(openai_api_key=chiave)
+embeddings = OpenAIEmbeddings(openai_api_key=chiave)
 
     # Vector store - FAISS (by Facebook)
 vector_store = FAISS.from_texts(pezzi, embeddings)
