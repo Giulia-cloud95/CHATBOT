@@ -5,6 +5,3 @@ langchain
 langchain-openai
 langchain-community
 langchain-text-splitters
-faiss-cpu
-PyPDF2
-pillow
