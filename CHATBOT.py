@@ -101,7 +101,7 @@ llm = ChatOpenAI(
   max_tokens = 1000,
   model_name = "gpt-3.5-0125")
       # https://platform.openai.com/docs/models/compare
-  chain = load_qa_chain (llm, chain_type="stuff")
+  chain = load_qa_chain(llm, chain_type="stuff")
 
 Prompt: deve avere {context} (per i documenti) e {question}
 prompt = ChatPromptTemplate.from_messages([
