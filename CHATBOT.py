@@ -111,6 +111,6 @@ if domanda:
     chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
             
     Output
-    risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
-    st.write(risposta["output_text"])
+      risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
+      st.write(risposta["output_text"])
 
