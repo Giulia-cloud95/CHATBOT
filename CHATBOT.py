@@ -109,7 +109,7 @@ if file is not None:
           #("human", "Domanda: {question}\n\nContesto:\n{context}")])  
   
     # Nuova doc chain che sostituisce load_qa_chain
-chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
+#chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
             
           # Output
           # Chain: prendi la domanda, individua i frammenti rilevanti,
