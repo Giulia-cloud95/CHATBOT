@@ -98,9 +98,9 @@ if file is not None:
     #Definiamo l'LLM
 #llm = ChatOpenAI(
               #openai_api_key= chiave,
-              temperature = 1.0,
-              max_tokens = 1000,
-              model_name = "gpt-3.5-turbo-0125")
+              #temperature = 1.0,
+              #max_tokens = 1000,
+              #model_name = "gpt-3.5-turbo-0125")
       # https://platform.openai.com/docs/models/compare
 
         # Prompt: deve avere {context} (per i documenti) e {question}
