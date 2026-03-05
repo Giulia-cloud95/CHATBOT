@@ -48,7 +48,7 @@ file = "Risorse.pdf"
 if file is not None:
   #testo_letto = PdfReader(file)
   testo = ""
-  for pagina in testo_letto.pages:
+  #for pagina in testo_letto.pages:
     #testo = testo + pagina.extract_text()
     
   #st.write(testo)
