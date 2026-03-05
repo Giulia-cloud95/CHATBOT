@@ -95,7 +95,7 @@ if domanda:
     st.write("Sto cercando le informazioni che mi hai richiesto...")
     #rilevanti = vector_store.similarity_search(domanda)
     
-  llm = ChatOpenAI(
+  #llm = ChatOpenAI(
   openai_api_key= chiave,
   temperature = 1.0,
   max_tokens = 1000,
