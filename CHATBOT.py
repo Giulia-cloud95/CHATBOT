@@ -108,7 +108,7 @@ if domanda:
                   #])  
   
     # Nuova doc chain che sostituisce load_qa_chain
-    chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
+    #chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
 # Output
       #risposta = chain.invoke ({"context": rilevanti, "question": domanda})
       #st.write(risposta["output_text"])
