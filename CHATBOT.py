@@ -96,7 +96,7 @@ if domanda:
     #rilevanti = vector_store.similarity_search(domanda)
     
     #llm = ChatOpenAI(
-  openai_api_key= chiave,
+  #openai_api_key= chiave,
   temperature = 1.0,
   max_tokens = 1000,
   model_name = "gpt-3.5-0125")
