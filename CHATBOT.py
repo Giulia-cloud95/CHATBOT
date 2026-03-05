@@ -103,7 +103,7 @@ if domanda:
   model_name = "gpt-3.5-turbo-0125")
       # https://platform.openai.com/docs/models/compare
 
-    Prompt: deve avere {context} (per i documenti) e {question}
+  Prompt: deve avere {context} (per i documenti) e {question}
     prompt = ChatPromptTemplate.from_messages([
     ("system", "Sei un assistente che risponde solo in base al contesto fornito."),
     ("human", "Domanda: {question}\n\nContesto:\n{context}")])  
@@ -115,5 +115,5 @@ if domanda:
           # Chain: prendi la domanda, individua i frammenti rilevanti,
   passali all'LLM, genera la risposta
 risposta = chain.invoke({"context": rilevanti, "question": domanda})
-st.write(risposta)
+  st.write(risposta)
 
