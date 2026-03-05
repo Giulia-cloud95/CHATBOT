@@ -104,16 +104,14 @@ llm = ChatOpenAI(
   
 Prompt: deve avere {context} (per i documenti) e {question}
 prompt = ChatPromptTemplate.from_messages([
-                  ("system", "Sei un assistente che risponde solo in base 
-                    al contesto fornito."),
-                  ("human", "Domanda:
-                    {question}\n\nContesto:\n{context}")
+                  ("system", "Sei un assistente che risponde solo in base al contesto fornito."),
+                  ("human", "Domanda: {question}\n\nContesto:\n{context}")
                     ])  
   
     # Nuova doc chain che sostituisce load_qa_chain
-chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
+  chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
             
 Genera e mostra la risposta 
-risposta = chain.run(input_documents = rilevanti, question = domanda)
-st.write(risposta)
+  risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
+  st.write(risposta["output_text"])
 
