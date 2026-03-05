@@ -31,7 +31,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAI
 # Nuovi import:
 from langchain.chains.question_answering import load_qa_chain
-from langchain_community_chatmodels import ChatOpenAI
+from langchain_openai import ChatOpenAI
 
 st.header(":credit_card: INFO GENERALI BOT :credit_card:")
 
