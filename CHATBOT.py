@@ -56,9 +56,9 @@ if file is not None:
     # Usiamo il text splitter di Langchain
   #testo_spezzato = RecursiveCharacterTextSplitter(
     #separators="\n",
-    chunk_size=1000, # Numero di caratteri per chunk
-    chunk_overlap=150,
-    length_function=len
+    #chunk_size=1000, # Numero di caratteri per chunk
+    #chunk_overlap=150,
+    #length_function=len
    #)
   pezzi = testo_spezzato.split_text(testo)
   st.write(pezzi)
