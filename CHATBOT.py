@@ -96,7 +96,7 @@ if file is not None:
       rilevanti = vector_store.similarity_search(domanda)
     
     #Definiamo l'LLM
-llm = ChatOpenAI(
+#llm = ChatOpenAI(
               openai_api_key= chiave,
               temperature = 1.0,
               max_tokens = 1000,
