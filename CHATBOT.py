@@ -30,8 +30,8 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain_community.chat_models import ChatOpenAI
 # Nuovi import:
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain_core.prompts import ChatPromptTemplate
+from langchain.question_answering import load_qa_chain
+from langchain_community.chatmodels import ChatOpenAI
 
 st.header(":credit_card: INFO GENERALI BOT :credit_card:")
 
