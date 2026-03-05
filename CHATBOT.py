@@ -46,30 +46,30 @@ file = st.file_uploader("Carica il tuo file", type="pdf")
 #file = "Risorse.pdf"
 from PyPDF2 import PdfReader
 
-if file is not None:
-    testo_letto = PdfReader(file)
+# if file is not None:
+    # testo_letto = PdfReader(file)
 
-    testo = ""
-    for pagina in testo_letto.pages:
-        testo = testo + pagina.extract_text()
+#testo = ""
+# for pagina in testo_letto.pages:
+ #testo = testo + pagina.extract_text()
         # st.write(testo)
 
     # Usiamo il text splitter di Langchain
-    testo_spezzato = RecursiveCharacterTextSplitter(
-        separators="\n",
-        chunk_size=1000, # Numero di caratteri per chunk
-        chunk_overlap=150,
-        length_function=len
+#testo_spezzato = RecursiveCharacterTextSplitter(
+        #separators="\n",
+        #chunk_size=1000, # Numero di caratteri per chunk
+        #chunk_overlap=150,
+        #length_function=len
         )
 
-    pezzi = testo_spezzato.split_text(testo)
+#pezzi = testo_spezzato.split_text(testo)
     # st.write(pezzi)
 
     # Generazione embeddings
-    embeddings = OpenAIEmbeddings(openai_api_key=chiave)
+# embeddings = OpenAIEmbeddings(openai_api_key=chiave)
 
     # Vector store - FAISS (by Facebook)
-    vector_store = FAISS.from_texts(pezzi, embeddings)
+#vector_store = FAISS.from_texts(pezzi, embeddings)
 
 # --------------------------------------------------
 # Gestione prompt
@@ -81,7 +81,7 @@ if file is not None:
       st.session_state.domanda = ""
       # reset dopo invio
 
-    st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
+st.text_input("Chiedi al chatbot:", key="domanda", on_change=invia)
     # key="domanda": assegna a st.session_state ciò che scriviamo (domanda)
     # Ogni volta che l’utente modifica il campo e preme Invio,
     # la funzione invia() viene chiamata.
