@@ -105,12 +105,12 @@ if domanda:
     prompt = ChatPromptTemplate.from_messages([
                   ("system", "Sei un assistente che risponde solo in base al contesto fornito."),
                   ("human", "Domanda: {question}\n\nContesto:\n{context}")
-                    ])  
+                  ])  
   
     # Nuova doc chain che sostituisce load_qa_chain
-      chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
+    chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
             
     Output
-      risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
-      st.write(risposta["output_text"])
+    risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
+    st.write(risposta["output_text"])
 
