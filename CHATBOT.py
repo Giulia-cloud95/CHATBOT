@@ -27,11 +27,11 @@ chiave = st.secrets["superkey"]
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
+from langchain.vectorstores import FAISS
 from langchain_openai import OpenAI
 # Nuovi import:
-from langchain.chains.question_answering import load_qa_chain
-from langchain_openai import ChatOpenAI
+from langchain.question_answering import load_qa_chain
+from langchain_community.chatmodels import ChatOpenAI
 
 st.header(":credit_card: INFO GENERALI BOT :credit_card:")
 
@@ -43,7 +43,7 @@ st.image(logo, width=800)
 with st.sidebar:
   st.title("Carica i tuoi documenti")
   file = st.file_uploader("Carica il tuo file", type="pdf")
-#file = "Risorse.pdf"
+file = "Risorse.pdf"
   from PyPDF2 import PdfReader
 if file is not None:
   testo_letto = PdfReader(file)
@@ -104,8 +104,7 @@ llm = ChatOpenAI(
       # https://platform.openai.com/docs/models/compare
 
         # Prompt: deve avere {context} (per i documenti) e {question}
-    
-prompt = ChatPromptTemplate.from_messages([
+        prompt = ChatPromptTemplate.from_messages([
           ("system", "Sei un assistente che risponde solo in base al contesto fornito."),
           ("human", "Domanda: {question}\n\nContesto:\n{context}")])  
   
@@ -115,6 +114,6 @@ chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
           # Output
           # Chain: prendi la domanda, individua i frammenti rilevanti,
           # passali all'LLM, genera la risposta
-risposta = chain.invoke({"context": rilevanti, "question": domanda})
-st.write(risposta)
+          risposta = chain.invoke({"context": rilevanti, "question": domanda})
+          st.write(risposta)
 
