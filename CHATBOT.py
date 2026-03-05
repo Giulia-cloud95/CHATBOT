@@ -36,7 +36,7 @@ from langchain_openai import ChatOpenAI
 st.header(":credit_card: INFO GENERALI BOT :credit_card:")
 
 from PIL import Image
-logo = Image.open("leone Generali Italia.png")
+logo = Image.open("leone Generali Italia.jpg")
 st.image(logo, width=800)
 # st.image(logo, use_column_width=True)
 
