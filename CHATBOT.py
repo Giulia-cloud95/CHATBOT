@@ -95,7 +95,7 @@ if domanda:
     st.write("Sto cercando le informazioni che mi hai richiesto...")
     rilevanti = vector_store.similarity_search(domanda)
     
-  llm = ChatOpenAI(
+    llm = ChatOpenAI(
   openai_api_key= chiave,
   temperature = 1.0,
   max_tokens = 1000,
@@ -111,6 +111,6 @@ prompt = ChatPromptTemplate.from_messages([
     chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
             
 Genera e mostra la risposta 
-      risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
-      st.write(risposta["output_text"])
+    risposta = chain.invoke({"input_documents": rilevanti, "question" = domanda})
+    st.write(risposta["output_text"])
 
