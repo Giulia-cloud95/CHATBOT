@@ -37,7 +37,6 @@ logo = Image.open("leone Generali Italia.jpg")
 st.image(logo, width=800)
 
 documento = "Risorse.pdf"
-
 with pdfplumber.open(documento) as pdf:
     st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
     testo = ""
