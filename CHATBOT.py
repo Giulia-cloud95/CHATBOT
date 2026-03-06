@@ -38,7 +38,7 @@ st.image(logo, width=800)
 
 documento = "Risorse.pdf"
 
-#with pdfplumber.open(documento) as pdf:
+with pdfplumber.open(documento) as pdf:
     st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
     testo = ""
     for pagina in pdf.pages:
