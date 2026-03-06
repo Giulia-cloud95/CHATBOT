@@ -13,7 +13,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
 # Inserisci qui la tua chiave API di OpenAI
-OPENAI_API_KEY = st.secrets["superkey"]
+OPENAI_API_KEY = st.secrets["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"]
 
 st.set_page_config(page_title= "INFO GENERALI BOT",
                    page_icon=":credit_card:")
