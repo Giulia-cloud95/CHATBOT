@@ -4,7 +4,7 @@
 from itertools import chain
 from click import prompt
 import streamlit as st
-#import pdfplumber
+import pdfplumber
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
@@ -37,6 +37,7 @@ logo = Image.open("leone Generali Italia.jpg")
 st.image(logo, width=800)
 
 documento = "Risorse.pdf"
+
 with pdfplumber.open(documento) as pdf:
     st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
     testo = ""
