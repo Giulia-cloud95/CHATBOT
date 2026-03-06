@@ -76,15 +76,16 @@ if file is not None:
   def invia():
       st.session_state.domanda_inviata = st.session_state.domanda
           # salva il contenuto di input in domanda_inviata
-      st.session_state.domanda = ""
+      st.session_state.domanda_utente = ""
           # reset dopo invio
     
-  st.text_input("", key="domanda", on_change=invia)
-        # key="domanda": assegna a st.session_state ciò che scriviamo (domanda)
+  st.text_input("Chiedi al chatbot:", key="domanda_utente":, on_change=invia)
+        # key="domanda_utente": assegna a st.session_state ciò che scriviamo (domanda_utente)
         # Ogni volta che l’utente modifica il campo e preme Invio,
         # la funzione invia() viene chiamata.
     
-  domanda = st.session_state.get("domanda_inviata", "")
+  domanda_utente = 
+  st.session_state.get("domanda_inviata", "")
         # Recupera il valore salvato in "domanda_inviata".
         # Se "domanda_inviata" non è ancora stato definito (es. al primo avvio dell'app),
         # allora il valore predefinito sarà "" (secondo argomento dell'istruzione)
@@ -95,17 +96,19 @@ if domanda:
     st.write("Sto cercando le informazioni che mi hai richiesto...")
     #rilevanti = vector_store.similarity_search(domanda)
     
-  #llm = ChatOpenAI(
-  #openai_api_key= chiave,
-  #temperature = 1.0,
-  #max_tokens = 1000,
-  #model_name = "gpt-3.5-0125")
+  llm = ChatOpenAI(
+  openai_api_key= chiave,
+  temperature = 0.3,
+  max_tokens = 1000,
+  model_name = "gpt-4o-mini")
+  openai_api_key=st.secrets["superkey"])
+
       # https://platform.openai.com/docs/models/compare
   #Prompt: deve avere {context} (per i documenti) e {question}
-    #prompt = ChatPromptTemplate.from_messages([
-                  #("system", "Sei un assistente che risponde solo in base al contesto fornito."),
-                  #("human", "Domanda: {question}\n\nContesto:\n{context}")
-                  #])  
+  prompt = ChatPromptTemplate.from_messages([
+                  ("system", "Sei un assistente che risponde solo in base al contesto fornito."),
+                  ("human", "Domanda: {question}\n\nContesto:\n{context}")
+                  ])  
   
     # Nuova doc chain che sostituisce load_qa_chain
     #chain = create_stuff_documents_chain(llm=llm, prompt=prompt)
