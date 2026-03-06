@@ -58,7 +58,7 @@ st.write(f"Totale frammenti creati: {len(frammenti)}")
 embeddings = OpenAIEmbeddings(
     # https://platform.openai.com/docs/models
     model="text-embedding-3-small",
-    openai_api_key=st.secrets["OPENAI_API_KEY"])
+    openai_api_key=st.secrets["superkey"])
 
 # Salviamo gli embeddings in un vector store o vector db (es. FAISS, Pinecone, etc.)
 vettori = FAISS.from_texts(frammenti, embedding=embeddings)
