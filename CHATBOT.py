@@ -30,16 +30,17 @@ st.markdown(
     """,
     unsafe_allow_html=True)
 
-st.header(":credit_card: INFO GENERALI BOT :credit_card:")
+st.header("Assistenza online")
 
 from PIL import Image
-logo = Image.open("leone Generali Italia.jpg")
+logo = Image.open("Leone Generali.png")
 st.image(logo, width=800)
 
 documento = "Risorse.pdf"
 
 with pdfplumber.open(documento) as pdf:
-    st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
+    # st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
+    st.write("Carico le informazioni...")
     testo = ""
     for pagina in pdf.pages:
         testo += pagina.extract_text() + "\n"
@@ -51,8 +52,7 @@ taglierina = RecursiveCharacterTextSplitter(
     chunk_overlap=200)
 
 frammenti = taglierina.split_text(testo)
-st.write(f"Totale frammenti creati: {len(frammenti)}")
-# st.write(frammenti)
+# st.write(f"Totale frammenti creati: {len(frammenti)}")
 
 # Generiamo gli embeddings
 embeddings = OpenAIEmbeddings(
