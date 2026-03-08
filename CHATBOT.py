@@ -1,10 +1,7 @@
-# ###########################################################
-# CHATBOT SENZA IL CARICAMENTO DEL PDF DA PARTE DELL'UTENTE #
-
-from itertools import chain
-from click import prompt
 import streamlit as st
 import pdfplumber
+from PIL import Image
+
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
@@ -12,117 +9,228 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 
-# Inserisci qui la tua chiave API di OpenAI
-OPENAI_API_KEY = st.secrets["superkey"]
 
-st.set_page_config(page_title= "INFO GENERALI BOT",
-                   page_icon=":credit_card:")
+# ==================================================
+# CONFIGURAZIONE PAGINA
+# ==================================================
 
-st.markdown(
-# Gestione colori esadecimali: https://divmagic.com/it/tools/color-converter
-    """
-    <style>
-    .stApp {
-        background-color: #f5fffa;
-        color: #000000;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True)
+st.set_page_config(
+    page_title="INFO GENERALI BOT",
+    page_icon=":credit_card:"
+)
+
+st.markdown("""
+<style>
+.stApp {
+    background-color: #f5fffa;
+    color: #000000;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.header("Assistenza online")
 
-from PIL import Image
-logo = Image.open("Leone Generali.png")
-st.image(logo, width=800)
 
-documento = "Risorse.pdf"
+# ==================================================
+# PERCORSI FILE
+# ==================================================
 
-with pdfplumber.open(documento) as pdf:
-    # st.write(f"Pagine totali: {len(pdf.pages)} - Comincio la scansione...")
-    st.write("Carico le informazioni...")
-    testo = ""
-    for pagina in pdf.pages:
-        testo += pagina.extract_text() + "\n"
-    # st.write(testo)
+DOCUMENTO = "Risorse.pdf"
+LOGO = "Leone Generali.png"
 
-taglierina = RecursiveCharacterTextSplitter(
-    separators=["\n\n", "\n", ". ", " "],
-    chunk_size=1000,
-    chunk_overlap=200)
 
-frammenti = taglierina.split_text(testo)
-# st.write(f"Totale frammenti creati: {len(frammenti)}")
+# ==================================================
+# FUNZIONI DI SUPPORTO
+# ==================================================
 
-# Generiamo gli embeddings
-embeddings = OpenAIEmbeddings(
-    # https://platform.openai.com/docs/models
-    model="text-embedding-3-small",
-    openai_api_key=st.secrets["superkey"])
+def formatta_documenti(documenti):
+    """Converte i documenti recuperati in una stringa unica."""
+    return "\n\n".join(doc.page_content for doc in documenti)
 
-# Salviamo gli embeddings in un vector store o vector db (es. FAISS, Pinecone, etc.)
-vettori = FAISS.from_texts(frammenti, embedding=embeddings)
 
-# Richiesta utente
+# ==================================================
+# LETTURA PDF
+# ==================================================
 
-# --------------------------------------------------
-# Gestione prompt
-# --------------------------------------------------
+@st.cache_data(show_spinner=False)
+def estrai_testo_pdf(percorso_pdf: str) -> str:
+    """
+    Estrae il testo da tutte le pagine del PDF.
+    Ignora le pagine che non restituiscono testo.
+    """
+    testo_completo = ""
 
-def invia():
-    st.session_state.domanda_inviata = st.session_state.domanda_utente
-    # salva il contenuto di input, cioè domanda_utente, in domanda_inviata
-    st.session_state.domanda_utente = ""
-    # reset dopo invio
+    with pdfplumber.open(percorso_pdf) as pdf:
+        for pagina in pdf.pages:
+            testo_pagina = pagina.extract_text()
+            if testo_pagina:
+                testo_completo += testo_pagina + "\n"
 
-st.text_input("Chiedi al chatbot:", key="domanda_utente", on_change=invia)
-# key="domanda_utente": assegna a st.session_state ciò che scriviamo (domanda_utente)
-# Ogni volta che l’utente modifica il campo e preme Invio,
-# la funzione invia() viene chiamata.
+    return testo_completo.strip()
 
-domanda_utente = st.session_state.get("domanda_inviata", "")
-# Recupera il valore salvato in "domanda_inviata".
-# Se "domanda_inviata" non è ancora stato definito (es. al primo avvio dell'app),
-# allora il valore predefinito sarà "" (secondo argomento dell'istruzione)
 
-# --------------------------------------------------
+# ==================================================
+# CREAZIONE CHUNKS
+# ==================================================
 
-# Generazione della risposta in una chain
-# domanda -> embedding -> similarity search -> risultati all'LLM -> risposta
-    
-def formatta_documento(documenti):
-    return "\n\n".join([documento.page_content for documento in documenti])
-
-comparatore = vettori.as_retriever(
-    # mmr = maximal marginal relevance
-    search_type="mmr",
-    # Ritorna i 4 frammenti più simili
-    search_kwargs={"k": 4})
-    
-modello_llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0.3,
-    max_tokens=1000,
-    openai_api_key=st.secrets["superkey"])
-
-prompt = ChatPromptTemplate.from_messages([
-    ("system", 
-     "Sei un agente assicurativo." 
-     "Usa il contesto fornito per rispondere alla domanda in modo conciso."
-     "Non accedere a informazioni esterne, come Internet."
-     "Se non conosci la risposta, dì semplicemente 'Non lo so'."
-     "contesto:\n{context}"),
-    ("human", "{question}")
-    ])   
-
-catena = (
-    {"context": comparatore | formatta_documento, "question": RunnablePassthrough()}
-    | prompt
-    | modello_llm
-    | StrOutputParser()
+@st.cache_data(show_spinner=False)
+def crea_frammenti(testo: str):
+    """
+    Suddivide il testo in frammenti adatti alla ricerca semantica.
+    """
+    splitter = RecursiveCharacterTextSplitter(
+        separators=["\n\n", "\n", ". ", " "],
+        chunk_size=1000,
+        chunk_overlap=200
     )
-    
-if domanda_utente:
-    risposta = catena.invoke(domanda_utente)
-    st.write(risposta)
+    return splitter.split_text(testo)
 
+
+# ==================================================
+# VECTOR STORE
+# ==================================================
+
+@st.cache_resource(show_spinner=False)
+def crea_vectorstore(frammenti):
+    """
+    Crea l'indice vettoriale FAISS a partire dai frammenti.
+    """
+    embeddings = OpenAIEmbeddings(
+        model="text-embedding-3-small",
+        openai_api_key=st.secrets["superkey"]
+    )
+
+    return FAISS.from_texts(frammenti, embedding=embeddings)
+
+
+# ==================================================
+# MODELLO LLM
+# ==================================================
+
+@st.cache_resource(show_spinner=False)
+def crea_llm():
+    """
+    Crea il modello di chat.
+    """
+    return ChatOpenAI(
+        model="gpt-4o-mini",
+        temperature=0.3,
+        max_tokens=1000,
+        openai_api_key=st.secrets["superkey"]
+    )
+
+
+# ==================================================
+# CATENA RAG
+# NOTA: niente cache qui, per evitare errori di hashing
+# ==================================================
+
+def crea_catena(vettori):
+    """
+    Costruisce la chain RAG usando il vector store già pronto.
+    """
+    retriever = vettori.as_retriever(
+        search_type="mmr",
+        search_kwargs={"k": 4}
+    )
+
+    prompt = ChatPromptTemplate.from_messages([
+        (
+            "system",
+            "Sei un agente assicurativo. "
+            "Rispondi usando solo il contesto fornito. "
+            "Non usare informazioni esterne. "
+            "Se la risposta non è presente nel contesto, scrivi semplicemente: 'Non ho trovato una risposta precisa. Per garantirti informazioni sicure, ti suggerisco di consultare le nostre FAQ o di contattare un esperto'. "
+            "Rispondi in italiano in modo chiaro e sintetico. "
+            "Contesto:\n{context}"
+        ),
+        ("human", "{question}")
+    ])
+
+    catena = (
+        {
+            "context": retriever | formatta_documenti,
+            "question": RunnablePassthrough()
+        }
+        | prompt
+        | crea_llm()
+        | StrOutputParser()
+    )
+
+    return catena
+
+
+# ==================================================
+# STATO SESSIONE
+# ==================================================
+
+if "risposta" not in st.session_state:
+    st.session_state.risposta = ""
+
+if "errore_setup" not in st.session_state:
+    st.session_state.errore_setup = ""
+
+
+# ==================================================
+# LOGO
+# ==================================================
+
+try:
+    logo = Image.open(LOGO)
+    st.image(logo, width=800)
+except Exception:
+    pass
+
+
+# ==================================================
+# PREPARAZIONE PIPELINE
+# ==================================================
+
+catena = None
+
+with st.spinner("Sto preparando il chatbot..."):
+    try:
+        testo = estrai_testo_pdf(DOCUMENTO)
+
+        if not testo:
+            raise ValueError("Il PDF non contiene testo leggibile.")
+
+        frammenti = crea_frammenti(testo)
+
+        if not frammenti:
+            raise ValueError("Non è stato possibile creare frammenti dal testo del PDF.")
+
+        vettori = crea_vectorstore(frammenti)
+        catena = crea_catena(vettori)
+
+        st.session_state.errore_setup = ""
+
+    except Exception as e:
+        st.session_state.errore_setup = f"Errore nella preparazione del chatbot: {e}"
+
+
+# ==================================================
+# INTERFACCIA UTENTE
+# ==================================================
+
+if st.session_state.errore_setup:
+    st.error(st.session_state.errore_setup)
+
+else:
+    domanda = st.text_input("Scrivi qui la tua domanda:")
+
+    if st.button("Invia", type="primary"):
+        if not domanda.strip():
+            st.warning("Inserisci una domanda prima di inviare.")
+        else:
+            with st.spinner("Sto cercando la risposta..."):
+                try:
+                    risposta = catena.invoke(domanda.strip())
+                    st.session_state.risposta = risposta
+                except Exception as e:
+                    st.session_state.risposta = ""
+                    st.error(f"Si è verificato un errore durante la risposta: {e}")
+
+    if st.session_state.risposta:
+        st.write("**Risposta:**")
+        st.write(st.session_state.risposta)
